@@ -1,0 +1,34 @@
+.table-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+    .table-head{
+        background: rgb(216, 216, 216);
+    }
+    .table-row{
+        color: #3f7dc6;
+        font-weight: bold;
+    }
+    .table-cell{
+        width: 100px;
+    }
+    .table-body{
+        margin: 10px;
+    }
+    .table-footer{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    .table-container{
+        display: inline-block;
+       
+
+    }
+    .table-cell{
+        width: 100px;
+    }
+}
