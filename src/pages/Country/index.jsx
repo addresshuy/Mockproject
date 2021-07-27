@@ -5,7 +5,7 @@ import { fetchCountries } from "../API";
 
 const Country = ({ handleCountryChange }) => {
   const [countries, setCountries] = useState([]);
-
+ 
   useEffect(() => {
     const fetchAPI = async () => {
       setCountries(await fetchCountries());

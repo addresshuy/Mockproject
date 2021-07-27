@@ -18,6 +18,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import numeral from "numeral";
 import { fetchDataCovid } from "../API";
 import "../TableCoutry/table.scss";
 
@@ -173,9 +174,9 @@ export default function TableCountry() {
             <TableRow key={row.name}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{row.countryRegion}</TableCell>
-              <TableCell>{row.confirmed}</TableCell>
-              <TableCell>{row.recovered}</TableCell>
-              <TableCell>{row.deaths}</TableCell>
+              <TableCell>{numeral(row.confirmed).format("0,0")}</TableCell>
+              <TableCell>{numeral(row.recovered).format("0,0")}</TableCell>
+              <TableCell>{numeral(row.deaths).format("0,0")}</TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
