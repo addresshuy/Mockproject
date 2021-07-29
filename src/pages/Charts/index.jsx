@@ -1,82 +1,87 @@
 import React, { useState, useEffect } from "react";
-import { fetchDailyData } from "../API";
-import { Line, Bar } from "react-chartjs-2";
-import styles from "./Chart.module.css";
+import HighchartsReact from "highcharts-react-official";
+import Highchart from "highcharts";
+import moment from "moment";
 
-const Chart = ({ data: { confirmed, recovered, deaths, date }, country }) => {
-  const [dailyData, setDailyData] = useState([]);
-
-  useEffect(() => {
-    const fetchAPI = async () => {
-      setDailyData(await fetchDailyData());
-    };
-    fetchAPI();
-  }, []);
-
-  const lineChart = dailyData.length ? (
-    <Line
-      data={{
-        labels: dailyData.map(({ date }) => date),
-        datasets: [
-          {
-            data: dailyData.map(({ confirmed }) => confirmed),
-            label: "Infected",
-            borderColor: "#3333ff",
-            fill: false,
+const generateOptions = (data) => {
+  const categories =
+    data.cases &&
+    Object.keys(data.cases).map((item, i) => moment(item).format("DD/MM/YY"));
+  return {
+    chart: {
+      type: "area",
+      
+    },
+    title: {
+      text: "Overview Chart",
+      align: "center",
+      style: { fontWeight: "bold" },
+    },
+    xAxis: {
+      categories: categories,
+      crosshair: true,
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: null,
+      },
+    },
+    colors: ["#F3585B", "#38A169", "#718096"],
+    tooltip: {
+      shared: true,
+      useHTML: true,
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0,
+      },
+      series: {
+        events: {
+          legendItemClick: function () {
+            if (this.visible) {
+              var count = 0;
+              for (var index in this.chart.series) {
+                if (this.chart.series[index].visible) {
+                  count = count + 1;
+                  if (count > 1) break;
+                }
+              }
+              if (count === 1) return false;
+            }
           },
-          // {
-          //   data: dailyData.map(({ recovered }) => recovered),
-          //   label: "Recovered",
-          //   borderColor: "red",
-
-          //   fill: true,
-          // },
-          {
-            data: dailyData.map(({ deaths }) => deaths),
-            label: "Deaths",
-            borderColor: "red",
-
-            fill: true,
-          },
-        ],
-      }}
-      options={{
-        scales: {
-          xAxes: [{ gridLines: { display: false } }],
-          yAxes: [{ gridLines: { display: false } }],
         },
-      }}
-    />
-  ) : null;
+      },
+    },
+    series: [
+      {
+        name: "Cases",
+        data: data.cases && Object.values(data.cases),
+      },
+      {
+        name: "Recovered",
+        data: data.recovered && Object.values(data.recovered),
+      },
+      {
+        name: "Deaths",
+        data: data.deaths && Object.values(data.deaths),
+      },
+    ],
+  };
+  
+};
 
-  const BarChart = confirmed ? (
-    <Bar
-      data={{
-        labels: ["Infected", "Recovered", "Deaths"],
-        datasets: [
-          {
-            label: "People",
-            backgroundColor: [
-              "rgba(0, 0, 255, 0.5)",
-              "rgba(0, 255, 0, 0.5)",
-              "rgba(255, 0, 0, 0.5)",
-            ],
-            data: [confirmed.value, recovered.value, deaths.value],
-          },
-        ],
-      }}
-      options={{
-        legend: { display: false },
-        title: { display: true, text: `current state in ${country}` },
-      }}
-    />
-  ) : null;
+function LineChart({ historyData }) {
+  const [options, setOptions] = useState({});
+  useEffect(() => {
+    setOptions(generateOptions(historyData));
+  }, [historyData]);
   return (
-    <div className={styles.container}>
-      
-      {country ? BarChart : lineChart}
-      
+    <div className="analytics__line-chart">
+      <HighchartsReact highcharts={Highchart} options={options} />
     </div>
   );
-};
-export default Chart;
+}
+
+export default LineChart;

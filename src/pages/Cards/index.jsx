@@ -4,11 +4,8 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import CountUp from "react-countup";
 import cx from "classnames";
 
-const Cards = ({ data: { confirmed, recovered, deaths } }) => {
-  if (!confirmed) {
-    return "Please wait..";
-  }
-
+function Cards({ totalData }) {
+  const { cases, recovered, deaths } = totalData;
   return (
     <div className={styles.container}>
       <Card
@@ -30,12 +27,7 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
             variant="h5"
             style={{ fontWeight: "bold", color: "#FF392B" }}
           >
-            <CountUp
-              start={0}
-              end={confirmed.value}
-              duration={3}
-              separator=","
-            />
+            <CountUp start={0} end={(cases)} duration={1} separator="," />
           </Typography>
           <Typography color="textSecondary">
             {new Date().toDateString()}
@@ -62,12 +54,7 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
             variant="h5"
             style={{ fontWeight: "bold", color: "#00945E" }}
           >
-            <CountUp
-              start={0}
-              end={recovered.value}
-              duration={3}
-              separator=","
-            />
+            <CountUp start={0} end={(recovered)} duration={1} separator="," />
           </Typography>
           <Typography color="textSecondary">
             {new Date().toDateString()}
@@ -94,7 +81,7 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
             variant="h5"
             style={{ fontWeight: "bold", color: "#222" }}
           >
-            <CountUp start={0} end={deaths.value} duration={3} separator="," />
+            <CountUp start={0} end={(deaths)} duration={1} separator="," />
           </Typography>
           <Typography color="textSecondary">
             {new Date().toDateString()}
@@ -103,5 +90,5 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
       </Card>
     </div>
   );
-};
+}
 export default Cards;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  totalData: null,
+  totalData: {},
   countries: [],
   detailCountry: {},
   historyData: {},
@@ -26,7 +26,7 @@ const globalSlice = createSlice({
       state.detailCountry = action.payload;
     },
     setHistoryData(state, action) {
-      state.historyInfo = action.payload;
+      state.historyData = action.payload;
     },
     
   },
