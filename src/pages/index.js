@@ -6,24 +6,47 @@ import Charts from "./Charts";
 import TableCountry from "./TableCoutry";
 import Layout from "../HOCs/Layout";
 import Map from "./MapCovid";
+import CountrySelector from "../components/Country";
 import { GlobalActions } from "../redux/rootAction";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 
-function Page() {
+function Page({ history }) {
   const dispatch = useDispatch();
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [historyData, setHistoryData] = useState({});
   const [mapData, setMapData] = useState({});
+  const [country, setCountry] = useState([]);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
   const countries = useSelector((state) => state.GlobalReducer.countries);
   const totalData = useSelector((state) => state.GlobalReducer.totalData);
 
   const getCountries = () => {
-    axios("https://disease.sh/v3/covid-19/countries")
+    axios
+      .get("https://disease.sh/v3/covid-19/countries")
       .then((res) => {
         dispatch(GlobalActions.setCountries(res.data));
       })
       .catch((err) => console.log("countries: ", err.response));
+  };
+  const getCountriesData = () => {
+    axios
+      .get("https://disease.sh/v3/covid-19/countries")
+      .then((res) => {
+        const country = res.data.map((country) => ({
+          name: country.country,
+          value: country.countryInfo.iso2,
+        }));
+        setMapZoom(4);
+        setCountry(country);
+        setMapCountries(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getTotalData = () => {
@@ -40,11 +63,6 @@ function Page() {
     );
   };
 
-// const getMapData = () =>{
-//   import('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/world-population.json').then((res) =>{
-//     setMapData(res);
-//   })
-// }
   const getHistoryInfo = () => {
     axios("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
       .then((res) => {
@@ -60,6 +78,7 @@ function Page() {
       getTotalData();
       getMapData();
       getHistoryInfo();
+      getCountriesData();
     } catch (error) {
       console.log(error);
     }
@@ -70,12 +89,15 @@ function Page() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <Cards totalData={totalData} />
-      <Charts historyData={historyData} />
-      <TableCountry countries={countries} />
-      <Map mapData={mapData} countries={countries} />
-    </div>
+    <>
+      <div className={styles.container}>
+        <CountrySelector countries={countries} history={history} />
+        <Cards totalData={totalData} />
+        <Charts historyData={historyData} />
+        <TableCountry countries={countries} />
+        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+      </div>
+    </>
   );
 }
 

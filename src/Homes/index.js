@@ -75,6 +75,7 @@ function NewsList() {
   }, []);
 
   return (
+    <>
     <div className="news-list-container">
       <div className="news-list">
         <Typography component="h2">COVID-19 NEWS</Typography>
@@ -84,6 +85,7 @@ function NewsList() {
         </div> */}
       </div>
     </div>
+    </>
   );
 }
 

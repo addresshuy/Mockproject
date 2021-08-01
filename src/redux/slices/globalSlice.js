@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
   isLoading: false,
   totalData: {},
   countries: [],
   detailCountry: {},
   historyData: {},
+  
   
 };
 
@@ -28,6 +30,7 @@ const globalSlice = createSlice({
     setHistoryData(state, action) {
       state.historyData = action.payload;
     },
+   
     
   },
 });
