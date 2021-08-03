@@ -5,8 +5,11 @@ import { GlobalActions } from "../redux/rootAction";
 import axios from "axios";
 import Cards from "./Cards";
 import Charts from "./Charts";
-import CountrySelect from "../components/Country";
+import CountrySelect from "../components/CountrySelect";
 import LineCharts from "./LineCharts";
+import Layout from "../HOCs/Layout";
+import { Spin } from "antd";
+import "./detailcountry.scss";
 
 function DetailCountry({ history }) {
   const dispatch = useDispatch();
@@ -61,22 +64,26 @@ function DetailCountry({ history }) {
 
   return (
     <>
-    <div>
-      {isLocalLoading ? (
-        <div>loading...</div>
-      ) : (
-        <div>
-          <div>
-            <CountrySelect countries={countries} history={history} />
-            <Cards detailCountry={detailCountry} />
-            <Charts detailHistory={detailHistory} />
-            <LineCharts detailHistory={detailHistory} />
+      <div>
+        {isLocalLoading ? (
+          <div className="example">
+            <Spin />
           </div>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div>
+            <div className="detail__container">
+              <CountrySelect countries={countries} history={history} />
+              <Cards detailCountry={detailCountry} />
+              <div className='detail__charts'>
+                <Charts detailHistory={detailHistory} />
+                <LineCharts detailHistory={detailHistory} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
 
-export default DetailCountry;
+export default Layout(DetailCountry);

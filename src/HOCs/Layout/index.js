@@ -1,11 +1,11 @@
-import Header from '../../components/Header';
-
+// import Header from '../../components/Header';
+import Navbar from '../../components/Navbar'
 
 const Layout = (Component) => {
   return (props) => {
     return (
       <>
-        <Header history={props.history} />
+        <Navbar history={props.history} />
         <Component {...props} />
       </>
     );

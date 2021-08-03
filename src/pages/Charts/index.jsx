@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
 import moment from "moment";
+import "./Charts.scss";
 
 const generateOptions = (data) => {
   const categories =
@@ -10,7 +11,6 @@ const generateOptions = (data) => {
   return {
     chart: {
       type: "area",
-      
     },
     title: {
       text: "Overview Chart",
@@ -69,7 +69,6 @@ const generateOptions = (data) => {
       },
     ],
   };
-  
 };
 
 function LineChart({ historyData }) {
@@ -78,7 +77,7 @@ function LineChart({ historyData }) {
     setOptions(generateOptions(historyData));
   }, [historyData]);
   return (
-    <div className="analytics__line-chart">
+    <div className="chart__container">
       <HighchartsReact highcharts={Highchart} options={options} />
     </div>
   );

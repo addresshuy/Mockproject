@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
+import './LineCharts.scss'
 
 const generateOptions = (detailHistory) => {
   const categories =
@@ -17,7 +18,7 @@ const generateOptions = (detailHistory) => {
     Object.values(detailHistory.deaths).reverse().slice(0, 14).reverse();
   return {
     chart: {
-      type: "column",
+      type: "line",
     },
     title: {
       text: "Monthly Average Rainfall",
@@ -36,10 +37,6 @@ const generateOptions = (detailHistory) => {
       },
     },
     tooltip: {
-      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-      pointFormat:
-        '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
       footerFormat: "</table>",
       shared: true,
       useHTML: true,
@@ -47,21 +44,38 @@ const generateOptions = (detailHistory) => {
     plotOptions: {
       column: {
         pointPadding: 0.2,
-        borderWidth: 0,
+        borderWidth: 1,
+      },
+       series: {
+        events: {
+          legendItemClick: function () {
+            if (this.visible) {
+              var count = 0;
+              for (var index in this.chart.series) {
+                if (this.chart.series[index].visible) {
+                  count = count + 1;
+                  if (count > 1) break;
+                }
+              }
+              if (count === 1) return false;
+            }
+          },
+        },
       },
     },
     series: [
       {
-        name: "Deaths",
-        data: deathsHistory,
+        name: "Cases",
+        data: casesHistory,
       },
       {
         name: "Recovered",
         data: recoveredHistory,
       },
+
       {
-        name: "Confirmed",
-        data: casesHistory,
+        name: "Deaths",
+        data: deathsHistory,
       },
     ],
   };

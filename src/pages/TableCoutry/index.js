@@ -1,6 +1,6 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "../../index.css";
+import "./table.scss";
 import { Typography, Table } from "antd";
 
 const columns = [
@@ -14,14 +14,13 @@ const columns = [
       </>
     ),
     width: 100,
-    
   },
   {
     title: "Confirmed",
     dataIndex: "confirmed",
-    
+
     sorter: {
-      confirmedNumber: (a, b) => a.confirmed - b.confirmed,
+      compare: (a, b) => a.confirmed - b.confirmed,
       multiple: 3,
     },
   },
@@ -29,7 +28,7 @@ const columns = [
     title: "Recovered",
     dataIndex: "recovered",
     sorter: {
-      recoveredNumber: (a, b) => a.recovered - b.recovered,
+      compare: (a, b) => a.recovered - b.recovered,
       multiple: 2,
     },
   },
@@ -37,7 +36,7 @@ const columns = [
     title: "Deaths",
     dataIndex: "deaths",
     sorter: {
-      deathsNumber: (a, b) => a.deaths - b.deaths,
+      compare: (a, b) => a.deaths - b.deaths,
       multiple: 1,
     },
   },
@@ -57,17 +56,19 @@ function InfoTable({ countries }) {
     };
   });
 
-  // const onChange = (pagination, filters, sorter, extra) => {};
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
   return (
-    <div className="home__info-table">
-      <Typography level={5} className="title">
+    <div className="table__container">
+      <Typography level={5} className="table__title">
         Table Data Covid - 19
       </Typography>
       <Table
         columns={columns}
         dataSource={data}
-        // onChange={onChange}
-        className="table"
+        onChange={onChange}
+        className="table__data"
       />
     </div>
   );

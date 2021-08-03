@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Typography } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
+import "antd/dist/antd.css";
+import { Card } from "antd";
 import Layout from "../HOCs/Layout";
 import "./news.scss";
 
 function NewsList() {
   const [news, setNews] = useState("");
-  const [pagination, setPagination] = useState(1);
   const [message, setMessage] = useState("");
-
-  const handlePagination = (e) => {
-    setPagination(e.target.textContent);
-  };
+  const { Meta } = Card;
   const getNews = () => {
     axios
       .get(
@@ -44,27 +30,13 @@ function NewsList() {
     }
     return news.map((item, index) => {
       return (
-        <div className="news-item">
-          <Card key={index}>
-            <CardHeader title={item.title} />
-
-            <CardMedia className="news-item__img">
-              <img src={item.urlToImage} alt={"img"} />
-            </CardMedia>
-            <div className="news-item__content">
-              <CardContent className="content__description">
-                {item.description}
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-                <IconButton aria-label="show more"></IconButton>
-              </CardActions>
-            </div>
+        <div>
+          <Card
+            hoverable
+            style={{ width: 300, marginTop: 5 }}
+            cover={<img src={item.urlToImage} alt={"img"} />}
+          >
+            <Meta title={item.title} description={item.description} />
           </Card>
         </div>
       );
@@ -76,15 +48,17 @@ function NewsList() {
 
   return (
     <>
-    <div className="news-list-container">
-      <div className="news-list">
-        <Typography component="h2">COVID-19 NEWS</Typography>
-        {renderNewsItem()}
-        {/* <div className="news-list__pagination">
-          <Pagination count={10} color="primary" onChange={handlePagination} />
-        </div> */}
+      <div className="news__item">
+        
+        <div
+          className="news__title"
+          component="h2"
+          style={{ fontWeight: "bold", margin: 10 }}
+        >
+          COVID-19 NEWS
+        </div>
+        <div className="news__content">{renderNewsItem()}</div>
       </div>
-    </div>
     </>
   );
 }

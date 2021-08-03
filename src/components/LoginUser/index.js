@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 import { GlobalActions } from "../../redux/slices/globalSlice";
 import GlobalLoading from "../GlobalLoading";
 import { Link } from "react-router-dom";
-import "./loginPage.scss";
+import "./LoginUser.scss";
 import Layout from "../../HOCs/Layout";
 
-function LoginPage(props) {
+function LoginUser(props) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -29,6 +29,7 @@ function LoginPage(props) {
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);
+
       history.push("/covid");
     }
   };
@@ -96,4 +97,4 @@ function LoginPage(props) {
   );
 }
 
-export default Layout(LoginPage);
+export default Layout(LoginUser);

@@ -1,0 +1,15 @@
+.chartsdetail__container{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    
+}
+@media only screen and (min-width: 768px){
+    .chartsdetail__container{
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        width: 45%;
+        float: right;
+    }
+}

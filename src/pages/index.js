@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../App.module.css";
 import Cards from "./Cards";
 import Charts from "./Charts";
 import TableCountry from "./TableCoutry";
 import Layout from "../HOCs/Layout";
 import Map from "./MapCovid";
-import CountrySelector from "../components/Country";
+import { Spin } from "antd";
+import CountrySelector from "../components/CountrySelect";
 import { GlobalActions } from "../redux/rootAction";
 import "leaflet/dist/leaflet.css";
+import "./Page.scss";
 import axios from "axios";
 
 function Page({ history }) {
@@ -90,13 +91,19 @@ function Page({ history }) {
 
   return (
     <>
-      <div className={styles.container}>
-        <CountrySelector countries={countries} history={history} />
-        <Cards totalData={totalData} />
-        <Charts historyData={historyData} />
-        <TableCountry countries={countries} />
-        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
-      </div>
+      {isLocalLoading ? (
+        <div className="example">
+          <Spin />
+        </div>
+      ) : (
+        <div className="pages__container">
+          <CountrySelector countries={countries} history={history} />
+          <Cards totalData={totalData} />
+          <Charts historyData={historyData} />
+          <TableCountry countries={countries} />
+          <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+        </div>
+      )}
     </>
   );
 }

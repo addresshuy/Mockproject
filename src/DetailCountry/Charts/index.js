@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
 import moment from "moment";
+import './ChartsDetail.scss'
 
 const generateOptions = (detailHistory) => {
-  const categories = detailHistory.cases && Object.keys(detailHistory.cases).map((item) =>
-    moment(item).format("DD/MM/YY")
-  );
+  const categories =
+    detailHistory.cases &&
+    Object.keys(detailHistory.cases).map((item) =>
+      moment(item).format("DD/MM/YY")
+    );
   return {
     chart: {
       type: "area",
     },
     title: {
-      text: "Overview Chart",
+      text: "Overview Chart Detail Country",
       align: "center",
       style: { fontWeight: "bold" },
     },
@@ -76,7 +79,7 @@ function LineChart({ detailHistory }) {
     setOptions(generateOptions(detailHistory));
   }, [detailHistory]);
   return (
-    <div className="analytics__line-chart">
+    <div className="chartsdetail__container">
       <HighchartsReact highcharts={Highchart} options={options} />
     </div>
   );

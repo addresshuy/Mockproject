@@ -1,5 +1,6 @@
 import React from "react";
 import "antd/dist/antd.css";
+import "./countrySelect.scss";
 import { Select } from "antd";
 const { Option } = Select;
 
@@ -22,20 +23,23 @@ function CountrySelect({ countries, history }) {
   };
 
   return (
-    <div>
-      <Select
-        showSearch
-        style={{ width: 200 }}
-        placeholder="Select a person"
-        optionFilterProp="children"
-        onChange={onChange}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-      >
-        {renderCountrySelect()}
-      </Select>
-    </div>
+    <>
+      <div className="country__container">
+        <Select
+          className="country__select"
+          showSearch
+          style={{}}
+          placeholder="Select a Country"
+          optionFilterProp="children"
+          onChange={onChange}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          {renderCountrySelect()}
+        </Select>
+      </div>
+    </>
   );
 }
 export default CountrySelect;
