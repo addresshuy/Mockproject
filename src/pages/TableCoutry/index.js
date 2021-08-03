@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import "./table.scss";
 import { Typography, Table } from "antd";
-
+import { useTranslation } from "react-i18next";
 const columns = [
   {
     title: "Country",
@@ -43,6 +43,7 @@ const columns = [
 ];
 
 function InfoTable({ countries }) {
+  const { t } = useTranslation();
   let data = countries.map((country, index) => {
     return {
       key: index + 1,
@@ -62,7 +63,7 @@ function InfoTable({ countries }) {
   return (
     <div className="table__container">
       <Typography level={5} className="table__title">
-        Table Data Covid - 19
+        {t("Covid.Title.Table")}
       </Typography>
       <Table
         columns={columns}

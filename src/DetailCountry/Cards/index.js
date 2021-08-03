@@ -4,9 +4,11 @@ import "./CardsDetail.scss";
 import { Card } from "antd";
 import CountUp from "react-countup";
 import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
 
 function Cards({ detailCountry }) {
   const { Title } = Typography;
+  const { t } = useTranslation();
   const { cases, recovered, deaths, todayCases, todayRecovered, todayDeaths } =
     detailCountry;
   return (
@@ -14,12 +16,10 @@ function Cards({ detailCountry }) {
       <div className="cards__container">
         <Card bordered={false} className="cards__cases" style={{ width: 350 }}>
           <Title level={3} className="cards__cases">
-            Cases
+            {t("Detail.Card.Confirmed")}
           </Title>
-          <CountUp start={0} end={cases} duration={1} separator="," /> 
-           <Title level={5} className="cards__cases">
-            Today Cases
-          </Title>
+          <CountUp start={0} end={cases} duration={1} separator="," />
+          <br></br>
           + <CountUp start={0} end={todayCases} duration={1} separator="," />
           <br></br>
           {new Date().toDateString()}
@@ -31,12 +31,10 @@ function Cards({ detailCountry }) {
           style={{ width: 350 }}
         >
           <Title level={3} className="cards__recovered">
-            Recovered
+            {t("Detail.Card.Recovered")}
           </Title>
           <CountUp start={0} end={recovered} duration={1} separator="," />
-          <Title level={5} className="cards__recovered">
-            Today Recovere
-          </Title>
+          <br></br>
           
           + <CountUp start={0} end={todayRecovered} duration={1} separator="," />
           <br></br>
@@ -45,12 +43,10 @@ function Cards({ detailCountry }) {
 
         <Card bordered={false} className="cards__deaths" style={{ width: 350 }}>
           <Title level={3} className="cards__deaths">
-            Deaths
+            {t("Detail.Card.Deaths")}
           </Title>
           <CountUp start={0} end={deaths} duration={1} separator="," />
-          <Title level={5} className="cards__deaths">
-            Today Deaths
-          </Title>
+          <br></br>
           + <CountUp start={0} end={todayDeaths} duration={1} separator="," />
           <br></br>
           {new Date().toDateString()}

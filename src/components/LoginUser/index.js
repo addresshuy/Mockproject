@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { GlobalActions } from "../../redux/slices/globalSlice";
 import GlobalLoading from "../GlobalLoading";
 import { Link } from "react-router-dom";
+
 import "./LoginUser.scss";
 import Layout from "../../HOCs/Layout";
 

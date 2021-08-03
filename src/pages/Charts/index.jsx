@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
 import moment from "moment";
+
 import "./Charts.scss";
 
 const generateOptions = (data) => {
+  
   const categories =
     data.cases &&
     Object.keys(data.cases).map((item, i) => moment(item).format("DD/MM/YY"));
@@ -78,6 +80,7 @@ function LineChart({ historyData }) {
   }, [historyData]);
   return (
     <div className="chart__container">
+    
       <HighchartsReact highcharts={Highchart} options={options} />
     </div>
   );

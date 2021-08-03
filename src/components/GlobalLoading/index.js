@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styles from '../GlobalLoading/GlobalLoading.scss'
+import './GlobalLoading.scss'
 
 function GlobalLoading(props) {
   const isLoading = useSelector((state) => state.GlobalReducer.isLoading);

@@ -14,14 +14,13 @@
   }
   .nav-links {
     display: flex;
-   flex-direction: row;
-  
+    flex-direction: row;
     list-style: none;
   }
   .nav-link {
     text-decoration: none;
     color: #fff;
-    margin: 5px;
+    margin: 10px;
     transition: 0.3s all;
   }
   .nav-link:hover {
@@ -32,6 +31,7 @@
     cursor: pointer;
   }
   .log-out{
+    margin-left: 10px;
     cursor: pointer;
   }
   .log-out:hover{
@@ -61,9 +61,9 @@
     }
     .nav-item {
       padding: 10px 0;
-
       display: flex;
       flex-direction: column;
+     
     }
     .nav-icon {
       display: flex;

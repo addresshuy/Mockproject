@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { GlobalActions } from "../../redux/rootAction";
-import { useDispatch } from "react-redux";
-import Lang from '../Lang'
+import { useTranslation } from "react-i18next";
+import Lang from "../Lang";
+
 import "./Navbar.scss";
 import {
   AiOutlineMenu,
@@ -17,13 +17,13 @@ import {
 import logo from "../../assets/Covid_Watch.png";
 
 function Navbar(props) {
-  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
   const history = useHistory();
 
   const handleLogout = () => {
     localStorage.setItem("isLoggedIn", false);
-    dispatch(GlobalActions.resetStore());
     localStorage.clear();
     history.push("/");
   };
@@ -32,8 +32,10 @@ function Navbar(props) {
   return (
     <nav className="navbar">
       <Link to="/" onClick={() => setOpen(false)} className="nav-logo">
-        <img src={logo} width="50" height="50" alt="logo" />{" "}
-        <span style={{ color: "red", fontWeight: "bold" }}>COVID-19</span>
+        <img src={logo} width="50" height="50" alt="logo" />
+        <span style={{ color: "red", fontWeight: "bold" }}>
+          {t("Navbar.Logo")}
+        </span>
       </Link>
       <div onClick={() => setOpen(!open)} className="nav-icon">
         {open ? <AiOutlineClose /> : <AiOutlineMenu />}
@@ -41,31 +43,34 @@ function Navbar(props) {
       <ul className={open ? "nav-links active" : "nav-links"}>
         <li className="nav-item">
           <Link to="/" className="nav-link">
-            <AiOutlineRead /> NEWS
+            <AiOutlineRead /> {t("Navbar.Home")}
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/covid" className="nav-link">
-            <AiOutlineLineChart /> COVID-19
+            <AiOutlineLineChart /> {t("Navbar.Covid")}
           </Link>
         </li>
-        <li><Lang /></li>
+        <li>
+          <Lang />
+        </li>
         {isLoggedIn ? (
           <li className="nav-item">
             <div className="log-out" onClick={handleLogout}>
-              <AiOutlineLogout /> LOG OUT
+              <AiOutlineLogout /> {t("Navbar.Logout")}
             </div>
           </li>
         ) : (
           <>
             <li className="nav-item">
               <Link to="/login" className="nav-link">
-                <AiOutlineUserAdd /> LOG IN
+                <AiOutlineUserAdd />
+                {t("Navbar.Login")}
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/register" className="nav-link">
-                <AiOutlineTeam /> REGISTER
+                <AiOutlineTeam /> {t("Navbar.Register")}
               </Link>
             </li>
           </>

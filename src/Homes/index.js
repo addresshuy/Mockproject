@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "antd/dist/antd.css";
 import { Card } from "antd";
+import { Spin } from "antd";
+import { useTranslation } from "react-i18next";
 import Layout from "../HOCs/Layout";
 import "./news.scss";
 
 function NewsList() {
   const [news, setNews] = useState("");
   const [message, setMessage] = useState("");
+  const [isLocalLoading, setIsLocalLoading] = useState(true);
   const { Meta } = Card;
+  const { t } = useTranslation();
   const getNews = () => {
     axios
       .get(
@@ -16,9 +20,10 @@ function NewsList() {
       )
       .then((res) => {
         setNews(res.data);
+        setIsLocalLoading(false);
       })
       .catch((err) => {
-        setMessage("Loading!");
+        setMessage("Loading");
       });
   };
 
@@ -48,17 +53,22 @@ function NewsList() {
 
   return (
     <>
-      <div className="news__item">
-        
-        <div
-          className="news__title"
-          component="h2"
-          style={{ fontWeight: "bold", margin: 10 }}
-        >
-          COVID-19 NEWS
+      {isLocalLoading ? (
+        <div className="example">
+          <Spin />
         </div>
-        <div className="news__content">{renderNewsItem()}</div>
-      </div>
+      ) : (
+        <div className="news__item">
+          <div
+            className="news__title"
+            component="h2"
+            style={{ fontWeight: "bold", margin: 10 }}
+          >
+            {t("News.Title")}
+          </div>
+          <div className="news__content">{renderNewsItem()}</div>
+        </div>
+      )}
     </>
   );
 }

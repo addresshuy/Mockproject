@@ -7,12 +7,17 @@ import Cards from "./Cards";
 import Charts from "./Charts";
 import CountrySelect from "../components/CountrySelect";
 import LineCharts from "./LineCharts";
+import PerOneMillion from "./PerOneMillion";
 import Layout from "../HOCs/Layout";
 import { Spin } from "antd";
+import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
 import "./detailcountry.scss";
 
 function DetailCountry({ history }) {
   const dispatch = useDispatch();
+  const { Title } = Typography;
+  const { t } = useTranslation();
   const { countrycode } = useParams();
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [detailHistory, setDetailHistory] = useState({});
@@ -72,9 +77,16 @@ function DetailCountry({ history }) {
         ) : (
           <div>
             <div className="detail__container">
+              <Title
+                level={2}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {t("Detail.Card.Title")}
+              </Title>
               <CountrySelect countries={countries} history={history} />
+              <PerOneMillion detailCountry={detailCountry} />
               <Cards detailCountry={detailCountry} />
-              <div className='detail__charts'>
+              <div className="detail__charts">
                 <Charts detailHistory={detailHistory} />
                 <LineCharts detailHistory={detailHistory} />
               </div>

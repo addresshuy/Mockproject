@@ -11,9 +11,13 @@ import { GlobalActions } from "../redux/rootAction";
 import "leaflet/dist/leaflet.css";
 import "./Page.scss";
 import axios from "axios";
+import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
 
 function Page({ history }) {
   const dispatch = useDispatch();
+  const { Title } = Typography;
+  const { t } = useTranslation();
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [historyData, setHistoryData] = useState({});
   const [mapData, setMapData] = useState({});
@@ -97,6 +101,12 @@ function Page({ history }) {
         </div>
       ) : (
         <div className="pages__container">
+          <Title
+            level={2}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            {t("Covid.Title")}
+          </Title>
           <CountrySelector countries={countries} history={history} />
           <Cards totalData={totalData} />
           <Charts historyData={historyData} />

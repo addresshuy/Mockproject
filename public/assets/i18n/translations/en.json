@@ -1,5 +1,29 @@
 {
-    "HELLO_WORLD": "Hello World!",
-    "REACT_EXAMPLE": "This is a react example ({{count}}).",
-    "THANK_YOU": "Thank you!"
-  }
+  "Navbar.Logo": "COVID-19",
+  "Navbar.Home": "HOME",
+  "Navbar.Covid": "COVID",
+  "Navbar.Login": "LOG IN",
+  "Navbar.Logout": "LOG OUT",
+  "Navbar.Register": "REGISTER",
+  "Navbar.News": "NEWS",
+  "Home.InfoCard.Title": "Stats Overview",
+  "Home.InfoCard.Confirmed": "Confirmed",
+  "Home.InfoCard.Recovered": "Recovered",
+  "Home.InfoCard.Deaths": "Deaths",
+  "Home.InfoCard.Detail": "More detail",
+  "Home.InfoTable.Title": "COUNTRIES AFFECTED",
+  "News.Title": "NEWS COVID-19",
+  "Covid.Title": "Covid-19 In The World",
+  "Covid.Title.Table": "Statistics By Country",
+  "Covid.Card.Confirmed": "Confirmed",
+  "Covid.Card.Recovered": "Recovered",
+  "Covid.Card.Deaths": "Deaths",
+  "Detail.Card.Confirmed": "Confirmed",
+  "Detail.Card.Recovered": "Recovered",
+  "Detail.Card.Deaths": "Deaths",
+  "Detail.Card.Title": "Overview",
+  "Detail.PerOneMillion.Case": "Case",
+  "Detail.PerOneMillion.Recovere": "Recovere",
+  "Detail.PerOneMillion.Death": "Death",
+  "Detail.PerOneMillion.Unit": "PerOneMillion"
+}
