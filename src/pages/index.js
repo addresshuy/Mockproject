@@ -21,7 +21,7 @@ function Page({ history }) {
   const { t } = useTranslation();
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [historyData, setHistoryData] = useState({});
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(true);
   const [mapData, setMapData] = useState({});
   const [country, setCountry] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
@@ -37,7 +37,7 @@ function Page({ history }) {
         dispatch(GlobalActions.setCountries(res.data));
       })
       .catch((err) => {
-        setMessage("Error get Data Countries");
+        console.log(err);
       });
   };
   const getCountriesData = () => {
@@ -54,7 +54,7 @@ function Page({ history }) {
         console.log(res.data);
       })
       .catch((err) => {
-        setMessage("Error get Data Countries");
+        console.log(err);
       });
   };
 
@@ -63,7 +63,7 @@ function Page({ history }) {
       .then((res) => {
         dispatch(GlobalActions.setTotalData(res.data));
       })
-      .catch((err) => setMessage("Error get Data Countries"));
+      .catch((err) => console.log(err));
   };
 
   const getMapData = () => {
@@ -79,7 +79,7 @@ function Page({ history }) {
         setIsLocalLoading(false);
         dispatch(GlobalActions.setIsLoading(false));
       })
-      .catch((err) => setMessage("Error get Data Countries"));
+      .catch((err) => console.log(err));
   };
   const fetchData = async () => {
     try {
@@ -88,8 +88,8 @@ function Page({ history }) {
       getMapData();
       getHistoryInfo();
       getCountriesData();
-    } catch (error) {
-      setMessage("Error FetchData");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -111,7 +111,6 @@ function Page({ history }) {
           >
             {t("Covid.Title")}
           </Title>
-          <div>{message}</div>
           <CountrySelector countries={countries} history={history} />
           <Cards totalData={totalData} />
           <Charts historyData={historyData} />

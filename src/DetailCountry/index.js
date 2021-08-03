@@ -19,7 +19,7 @@ function DetailCountry({ history }) {
   const { Title } = Typography;
   const { t } = useTranslation();
   const { countrycode } = useParams();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(true);
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [detailHistory, setDetailHistory] = useState({});
   const countries = useSelector((state) => state.GlobalReducer.countries);
@@ -43,7 +43,7 @@ function DetailCountry({ history }) {
         dispatch(GlobalActions.setDetailCountry(res.data));
       })
       .catch((err) => {
-        setMessage("Error data");
+        console.log(err)
       });
   };
   const getDetailHistory = () => {
@@ -57,7 +57,7 @@ function DetailCountry({ history }) {
         dispatch(GlobalActions.setIsLoading(false));
       })
       .catch((err) => {
-        setMessage("Error data");
+        console.log(err)
       });
   };
   const fetchData = async () => {
@@ -65,8 +65,8 @@ function DetailCountry({ history }) {
       getCountry();
       getDetailCountry();
       getDetailHistory();
-    } catch (error) {
-      setMessage("Error data");
+    } catch (err) {
+      console.log(err)
     }
   };
 
