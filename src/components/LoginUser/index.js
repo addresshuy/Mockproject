@@ -61,6 +61,7 @@ function LoginUser(props) {
       ) : (
         <div className="container-login">
           <div className="container-login-body">
+           
             <form onSubmit={handleLoginSubmit}>
               <h2>LOGIN FORM</h2>
               <div className="container-body-form">
@@ -85,7 +86,7 @@ function LoginUser(props) {
               </div>
 
               <span className="note-login">
-                Don’t have an account?{" "}
+                Don’t have an account?
                 <Link to={"/register"} style={{ textDecoration: "none" }}>
                   Sign up
                 </Link>

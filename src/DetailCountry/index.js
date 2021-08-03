@@ -19,6 +19,7 @@ function DetailCountry({ history }) {
   const { Title } = Typography;
   const { t } = useTranslation();
   const { countrycode } = useParams();
+  const [message, setMessage] = useState("");
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [detailHistory, setDetailHistory] = useState({});
   const countries = useSelector((state) => state.GlobalReducer.countries);
@@ -31,7 +32,9 @@ function DetailCountry({ history }) {
       .then((res) => {
         dispatch(GlobalActions.setCountries(res.data));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setMessage("Error data");
+      });
   };
   const getDetailCountry = () => {
     axios
@@ -39,7 +42,9 @@ function DetailCountry({ history }) {
       .then((res) => {
         dispatch(GlobalActions.setDetailCountry(res.data));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setMessage("Error data");
+      });
   };
   const getDetailHistory = () => {
     axios
@@ -51,7 +56,9 @@ function DetailCountry({ history }) {
         setIsLocalLoading(false);
         dispatch(GlobalActions.setIsLoading(false));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setMessage("Error data");
+      });
   };
   const fetchData = async () => {
     try {
@@ -59,7 +66,7 @@ function DetailCountry({ history }) {
       getDetailCountry();
       getDetailHistory();
     } catch (error) {
-      console.log(error);
+      setMessage("Error data");
     }
   };
 
@@ -83,6 +90,7 @@ function DetailCountry({ history }) {
               >
                 {t("Detail.Card.Title")}
               </Title>
+              {message}
               <CountrySelect countries={countries} history={history} />
               <PerOneMillion detailCountry={detailCountry} />
               <Cards detailCountry={detailCountry} />

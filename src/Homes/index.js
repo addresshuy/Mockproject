@@ -23,7 +23,7 @@ function NewsList() {
         setIsLocalLoading(false);
       })
       .catch((err) => {
-        setMessage("Loading");
+        setMessage("Error get data");
       });
   };
 
@@ -36,6 +36,7 @@ function NewsList() {
     return news.map((item, index) => {
       return (
         <div>
+        
           <Card
             hoverable
             style={{ width: 300, marginTop: 5 }}

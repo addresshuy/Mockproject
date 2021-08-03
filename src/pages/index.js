@@ -8,11 +8,12 @@ import Map from "./MapCovid";
 import { Spin } from "antd";
 import CountrySelector from "../components/CountrySelect";
 import { GlobalActions } from "../redux/rootAction";
-import "leaflet/dist/leaflet.css";
-import "./Page.scss";
 import axios from "axios";
 import { Typography } from "antd";
 import { useTranslation } from "react-i18next";
+
+import "leaflet/dist/leaflet.css";
+import "./Page.scss";
 
 function Page({ history }) {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function Page({ history }) {
   const { t } = useTranslation();
   const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [historyData, setHistoryData] = useState({});
+  const [message, setMessage] = useState("");
   const [mapData, setMapData] = useState({});
   const [country, setCountry] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
@@ -34,7 +36,9 @@ function Page({ history }) {
       .then((res) => {
         dispatch(GlobalActions.setCountries(res.data));
       })
-      .catch((err) => console.log("countries: ", err.response));
+      .catch((err) => {
+        setMessage("Error get Data Countries");
+      });
   };
   const getCountriesData = () => {
     axios
@@ -50,7 +54,7 @@ function Page({ history }) {
         console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setMessage("Error get Data Countries");
       });
   };
 
@@ -59,7 +63,7 @@ function Page({ history }) {
       .then((res) => {
         dispatch(GlobalActions.setTotalData(res.data));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => setMessage("Error get Data Countries"));
   };
 
   const getMapData = () => {
@@ -75,7 +79,7 @@ function Page({ history }) {
         setIsLocalLoading(false);
         dispatch(GlobalActions.setIsLoading(false));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => setMessage("Error get Data Countries"));
   };
   const fetchData = async () => {
     try {
@@ -85,7 +89,7 @@ function Page({ history }) {
       getHistoryInfo();
       getCountriesData();
     } catch (error) {
-      console.log(error);
+      setMessage("Error FetchData");
     }
   };
 
@@ -107,6 +111,7 @@ function Page({ history }) {
           >
             {t("Covid.Title")}
           </Title>
+          <div>{message}</div>
           <CountrySelector countries={countries} history={history} />
           <Cards totalData={totalData} />
           <Charts historyData={historyData} />
