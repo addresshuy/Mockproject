@@ -20,7 +20,6 @@ function PerOneMillion({ detailCountry }) {
           <span>{recoveredPerOneMillion}</span>
           <p>{t("Detail.PerOneMillion.Unit")}</p>
         </div>
-
         <div className="detail__death">
           <p>{t("Detail.PerOneMillion.Death")}</p>
           <span>{deathsPerOneMillion}</span>
